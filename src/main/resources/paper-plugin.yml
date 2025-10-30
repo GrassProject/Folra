@@ -1,0 +1,11 @@
+name: Folra
+version: ${version}
+author: GrassProject
+
+api-version: "1.21"
+description: Plugin Framework
+load: STARTUP
+website: https://grassproject.github.io
+
+main: com.github.grassproject.folra.Folra
+loader: com.github.grassproject.folra.loader.FolraLoader

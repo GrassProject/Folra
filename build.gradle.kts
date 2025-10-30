@@ -22,7 +22,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
 
     implementation(project(":API"))
-    implementation(project("NMS:1_21_8"))
+    // implementation(project("NMS:1_21_8"))
 }
 
 kotlin {
@@ -35,7 +35,7 @@ java {
 }
 
 tasks.register<ShadowJar>("shadowJarPlugin") {
-    archiveFileName.set("Aeolus-${project.version}.jar")
+    archiveFileName.set("Folra-${project.version}.jar")
 
     from(sourceSets.main.get().output)
     configurations = listOf(project.configurations.runtimeClasspath.get())

@@ -12,15 +12,14 @@ repositories {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
-
-    // gradlePluginPortal()
-    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
-    // paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
     compileOnly(project(":API"))
+    compileOnly("net.kyori:adventure-text-serializer-gson:4.20.0")
 }
+
 kotlin {
     jvmToolchain(21)
 }
