@@ -16,10 +16,21 @@ repositories {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+
+    maven("https://repo.nexomc.com/releases")
+    maven("https://repo.momirealms.net/releases/")
+    maven("https://maven.devs.beer/")
+    maven("https://nexus.phoenixdevt.fr/repository/maven-public/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+
+    compileOnly("com.nexomc:nexo:1.12.0-dev")
+    compileOnly("net.momirealms:craft-engine-core:0.0.64")
+    compileOnly("net.momirealms:craft-engine-bukkit:0.0.64")
+    compileOnly("dev.lone:api-itemsadder:4.0.10")
+    compileOnly("net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT")
 
     implementation(project(":API"))
     // implementation(project("NMS:1_21_8"))

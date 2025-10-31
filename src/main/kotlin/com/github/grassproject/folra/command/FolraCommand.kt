@@ -1,13 +1,15 @@
 package com.github.grassproject.folra.command
 
+import com.github.grassproject.folra.util.message.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
-abstract class FolraComand(
+abstract class FolraCommand(
     name: String,
     description: String,
     aliases: MutableList<String>,
     val subCommands: MutableMap<String, FolraCommandExecutor>,
+    val helpMessage: () -> Message
 ) : Command(name, description, "/$name", aliases) {
 
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
@@ -21,7 +23,7 @@ abstract class FolraComand(
             helpMessage().send(sender)
             return true
         }
-        cmd.run(sender, args)
+        cmd.execute(sender, args)
         return true
     }
 
@@ -34,7 +36,4 @@ abstract class FolraComand(
         return cmd.tabComplete(sender, args.drop(1).toTypedArray())
     }
 
-    fun registerCmd(namespace: String) {
-        register(namespace)
-    }
 }

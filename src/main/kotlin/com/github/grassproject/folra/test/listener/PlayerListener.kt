@@ -1,4 +1,4 @@
-package com.github.grassproject.folra.test
+package com.github.grassproject.folra.test.listener
 
 import com.github.grassproject.folra.api.FolraPlugin
 import org.bukkit.event.EventHandler
@@ -9,6 +9,6 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun PlayerJoinEvent.on() {
-        FolraPlugin.PLUGINS.forEach { player.sendMessage(it.toString()) }
+        FolraPlugin.Companion.PLUGINS.forEach { player.sendMessage(it.toString()) }
     }
 }

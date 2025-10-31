@@ -1,8 +1,7 @@
 package com.github.grassproject.folra
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.api.event.register
-import com.github.grassproject.folra.test.PlayerListener
+import com.github.grassproject.folra.test.TestPlugin
 
 class Folra : FolraPlugin() {
 
@@ -19,7 +18,7 @@ class Folra : FolraPlugin() {
     }
 
     override fun enable() {
-        PlayerListener().register()
+        TestPlugin()
         info("FolraPlugin: enable() called")
     }
 
