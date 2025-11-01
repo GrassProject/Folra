@@ -12,5 +12,6 @@ class PlayerListener : Listener {
     fun PlayerJoinEvent.on() {
         FolraPlugin.PLUGINS.forEach { player.sendMessage(it.toString()) }
         player.sendMessage(Folra.INSTANCE.name)
+        println(Folra.translate.literate("test"))
     }
 }

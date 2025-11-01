@@ -11,10 +11,10 @@ import org.bukkit.command.CommandSender
 class FolraTranslate(private val plugin: FolraPlugin) {
 
     private val gson = Gson()
-    private lateinit var configFile: ConfigFile
-    private lateinit var jsonCache: JsonObject
+    private var configFile: ConfigFile
+    private var jsonCache: JsonObject
 
-    fun register() {
+    init {
         val lang = plugin.config.getString("language") ?: "korean"
         configFile = ConfigFile(plugin, "language/$lang.json")
         if (!configFile.exists()) plugin.saveResource("language/$lang.json", false)

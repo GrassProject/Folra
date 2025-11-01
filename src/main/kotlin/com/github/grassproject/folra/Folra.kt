@@ -4,6 +4,7 @@ import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.command.FolraCommand
 import com.github.grassproject.folra.command.impl.ItemConvertCommand
 import com.github.grassproject.folra.command.register
+import com.github.grassproject.folra.language.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
 import com.github.grassproject.folra.test.command.impl.HelloCommand
 import com.github.grassproject.folra.util.message.impl.EmptyMessage
@@ -15,10 +16,13 @@ class Folra : FolraPlugin() {
             get() {
                 return FolraPlugin.INSTANCE as Folra
             }
+
+        lateinit var translate: FolraTranslate
     }
 
     override fun load() {
         FolraPlugin.INSTANCE = this
+        translate = FolraTranslate(this)
     }
 
     override fun enable() {
