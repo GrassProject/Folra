@@ -1,7 +1,12 @@
 package com.github.grassproject.folra
 
 import com.github.grassproject.folra.api.FolraPlugin
+import com.github.grassproject.folra.command.FolraCommand
+import com.github.grassproject.folra.command.impl.ItemConvertCommand
+import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.test.TestPlugin
+import com.github.grassproject.folra.test.command.impl.HelloCommand
+import com.github.grassproject.folra.util.message.impl.EmptyMessage
 
 class Folra : FolraPlugin() {
 
@@ -19,7 +24,21 @@ class Folra : FolraPlugin() {
 
     override fun enable() {
         TestPlugin()
-        info("FolraPlugin: enable() called")
+
+        FolraCommand(
+            "folra", "Folra base command", mutableListOf(),
+            mutableMapOf(
+                "itemcovert" to ItemConvertCommand
+            )
+        ) { EmptyMessage() }.register("folra")
+
+        FolraCommand(
+            "test", "Folra base command", mutableListOf(),
+            mutableMapOf(
+                "hello" to HelloCommand
+            )
+        ) { EmptyMessage() }.register("test")
+
     }
 
     override fun disable() {

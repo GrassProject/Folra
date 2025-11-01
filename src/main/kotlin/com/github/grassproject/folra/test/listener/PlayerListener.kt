@@ -9,6 +9,6 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun PlayerJoinEvent.on() {
-        FolraPlugin.Companion.PLUGINS.forEach { player.sendMessage(it.toString()) }
+        FolraPlugin.PLUGINS.forEach { player.sendMessage(it.toString()) }
     }
 }

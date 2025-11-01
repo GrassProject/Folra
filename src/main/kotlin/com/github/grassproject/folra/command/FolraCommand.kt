@@ -4,13 +4,23 @@ import com.github.grassproject.folra.util.message.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
-abstract class FolraCommand(
+class FolraCommand(
     name: String,
     description: String,
     aliases: MutableList<String>,
-    val subCommands: MutableMap<String, FolraCommandExecutor>,
+    // permissionData: MutableMap<String, PermissionDefault>,
+    val subCommands: MutableMap<String, IFolraCommand>,
     val helpMessage: () -> Message
 ) : Command(name, description, "/$name", aliases) {
+
+//    init {
+//        permissionData.forEach { (node, default) ->
+//            val perm = Permission(node, default)
+//            if (Bukkit.getPluginManager().getPermission(node) == null) {
+//                Bukkit.getPluginManager().addPermission(perm)
+//            }
+//        }
+//    }
 
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
