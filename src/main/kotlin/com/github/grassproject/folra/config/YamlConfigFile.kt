@@ -1,4 +1,4 @@
-package com.github.grassproject.folra.util
+package com.github.grassproject.folra.config
 
 import com.github.grassproject.folra.api.FolraPlugin
 import org.bukkit.configuration.file.FileConfiguration
@@ -6,12 +6,12 @@ import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.io.InputStreamReader
 
-class ConfigFile(private val plugin: FolraPlugin, private val name: String) {
+class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) : IConfigFile<FileConfiguration> {
 
     private val file = File(plugin.dataFolder, name)
     private var config: FileConfiguration = YamlConfiguration.loadConfiguration(file)
 
-    fun load(): FileConfiguration {
+    override fun load(): FileConfiguration {
         file.parentFile?.mkdirs()
         if (!file.exists()) {
             try { plugin.saveResource(name, false) }
@@ -28,10 +28,11 @@ class ConfigFile(private val plugin: FolraPlugin, private val name: String) {
         return config
     }
 
-    fun get(): FileConfiguration = config
-    fun save() = config.save(file)
-    fun exists(): Boolean = file.exists()
-    fun delete(): Boolean = file.delete()
-    fun getFile(): File = file
+    override fun save() {
+        config.save(file)
+    }
 
+    override fun exists(): Boolean = file.exists()
+    override fun getFile(): File = file
+    fun getConfig(): FileConfiguration = config
 }

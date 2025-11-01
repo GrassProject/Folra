@@ -1,3 +1,4 @@
 {
-  "test": "Test Message"
+  "test": "Test Message",
+  "greet": "Hello, {name}!"
 }

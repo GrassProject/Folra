@@ -13,5 +13,6 @@ class PlayerListener : Listener {
         FolraPlugin.PLUGINS.forEach { player.sendMessage(it.toString()) }
         player.sendMessage(Folra.INSTANCE.name)
         println(Folra.translate.literate("test"))
+        println(Folra.translate.literate("greet", mapOf("name" to player.name)))
     }
 }
