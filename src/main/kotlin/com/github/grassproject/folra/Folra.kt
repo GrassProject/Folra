@@ -8,6 +8,7 @@ import com.github.grassproject.folra.language.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
 import com.github.grassproject.folra.test.command.impl.HelloCommand
 import com.github.grassproject.folra.util.message.impl.EmptyMessage
+import com.github.grassproject.folra.util.message.impl.SimpleMessage
 
 class Folra : FolraPlugin() {
 
@@ -40,7 +41,7 @@ class Folra : FolraPlugin() {
             mutableMapOf(
                 "hello" to HelloCommand
             )
-        ) { EmptyMessage() }.register("test")
+        ) { translate.getMessage("test") }.register("test")
 
     }
 
