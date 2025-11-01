@@ -10,7 +10,12 @@ class TestPlugin {
         PlayerListener().register()
         // FolraCommandImpl().register("folra")
 
-        YamlConfigFile(Folra.INSTANCE, "config.yml").load()
+        val config = YamlConfigFile(Folra.INSTANCE, "test.yml")
+        config.load()
+        config.write("test", false)
+        println("aaaaaaaaa ${config.getValue<Boolean>("test")}")
+        println("aaaaaaaaa ${config.getValue<Boolean>("test")}")
+        println("aaaaaaaaa ${config.getValue<Boolean>("test")}")
         YamlConfigFile(Folra.INSTANCE, "command.yml").load()
     }
 }

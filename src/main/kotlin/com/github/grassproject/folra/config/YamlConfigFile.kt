@@ -11,12 +11,17 @@ class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) 
     private val file = File(plugin.dataFolder, name)
     private var config: FileConfiguration = YamlConfiguration.loadConfiguration(file)
 
-    override fun load(): FileConfiguration {
-        file.parentFile?.mkdirs()
+    init {
         if (!file.exists()) {
+            file.parentFile?.mkdirs()
             try { plugin.saveResource(name, false) }
             catch (_: IllegalArgumentException) { file.createNewFile() }
         }
+        load()
+    }
+
+    override fun load(): FileConfiguration {
+        config = YamlConfiguration.loadConfiguration(file)
 
         plugin.getResource(name)?.let { stream ->
             val defaults = YamlConfiguration.loadConfiguration(InputStreamReader(stream, Charsets.UTF_8))
@@ -32,7 +37,35 @@ class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) 
         config.save(file)
     }
 
+    override fun reload() {
+        save()
+        load()
+    }
+
     override fun exists(): Boolean = file.exists()
     override fun getFile(): File = file
+
+    override fun write(path: String, value: Any) {
+        config.set(path, value)
+        reload()
+    }
+
+    override fun remove(path: String) {
+        if (config.contains(path)) config.set(path, null)
+        reload()
+    }
+
+    override fun isEmpty(): Boolean = config.getKeys(false).isEmpty()
+
+    inline fun <reified V> getValue(path: String): V? {
+        val value = getConfig().get(path) ?: return null
+        return try {
+            value as? V
+        } catch (_: ClassCastException) {
+            null
+        }
+    }
+
     fun getConfig(): FileConfiguration = config
 }
+
