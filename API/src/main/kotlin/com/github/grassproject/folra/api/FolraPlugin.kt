@@ -19,8 +19,9 @@ abstract class FolraPlugin : JavaPlugin(), IFolraPlugin {
     override fun onEnable() {
         PLUGINS.add(this)
         FolraPluginRegisterEvent(this).callEvent()
-        info("Registered plugin $name")
         enable()
+
+        info("Registered plugin $name")
     }
 
     override fun onDisable() {
@@ -28,4 +29,5 @@ abstract class FolraPlugin : JavaPlugin(), IFolraPlugin {
         FolraPluginUnregisterEvent(this).callEvent()
         disable()
     }
+
 }

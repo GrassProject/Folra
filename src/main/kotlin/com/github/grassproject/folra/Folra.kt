@@ -15,7 +15,6 @@ class Folra : FolraPlugin() {
             get() {
                 return FolraPlugin.INSTANCE as Folra
             }
-
     }
 
     override fun load() {
