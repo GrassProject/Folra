@@ -8,7 +8,6 @@ import com.github.grassproject.folra.language.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
 import com.github.grassproject.folra.test.command.impl.HelloCommand
 import com.github.grassproject.folra.util.message.impl.EmptyMessage
-import com.github.grassproject.folra.util.message.impl.SimpleMessage
 
 class Folra : FolraPlugin() {
 
@@ -28,6 +27,7 @@ class Folra : FolraPlugin() {
 
     override fun enable() {
         TestPlugin()
+        FolraPermission.register()
 
         FolraCommand(
             "folra", "Folra base command", mutableListOf(),

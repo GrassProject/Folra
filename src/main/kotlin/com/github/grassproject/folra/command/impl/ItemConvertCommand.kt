@@ -1,5 +1,6 @@
 package com.github.grassproject.folra.command.impl
 
+import com.github.grassproject.folra.FolraPermission
 import com.github.grassproject.folra.command.IFolraCommand
 import com.github.grassproject.folra.util.item.ItemEncoder
 import com.github.grassproject.folra.util.toMiniMessage
@@ -8,7 +9,7 @@ import org.bukkit.entity.Player
 
 object ItemConvertCommand : IFolraCommand {
     override fun execute(sender: CommandSender, args: Array<out String>) {
-        if (!sender.hasPermission("folra.admin")) return
+        if (!FolraPermission.FOLRA_ADMIN.has(sender)) return
         if (sender !is Player) return
 
         val item = sender.inventory.itemInMainHand
