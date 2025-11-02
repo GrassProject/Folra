@@ -21,6 +21,7 @@ repositories {
     maven("https://repo.momirealms.net/releases/")
     maven("https://maven.devs.beer/")
     maven("https://nexus.phoenixdevt.fr/repository/maven-public/")
+    maven("https://repo.extendedclip.com/releases/")
 }
 
 dependencies {
@@ -31,6 +32,7 @@ dependencies {
     compileOnly("net.momirealms:craft-engine-bukkit:0.0.64")
     compileOnly("dev.lone:api-itemsadder:4.0.10")
     compileOnly("net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 
     implementation(project(":API"))
     // implementation(project("NMS:1_21_8"))
