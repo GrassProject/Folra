@@ -9,3 +9,21 @@ website: https://grassproject.github.io
 
 main: com.github.grassproject.folra.Folra
 loader: com.github.grassproject.folra.loader.FolraLoader
+
+dependencies:
+  server:
+    CraftEngine:
+      load: BEFORE
+      required: false
+    ItemsAdder:
+      load: BEFORE
+      required: false
+    MMOItems:
+      load: BEFORE
+      required: false
+    Nexo:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
