@@ -6,24 +6,31 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import java.io.File
 
-class JsonConfigFile(private val plugin: FolraPlugin, private val name: String) : IConfigFile<JsonObject> {
+class JsonConfigFile(
+    private val plugin: FolraPlugin,
+    private val name: String
+) : IConfigFile<JsonObject> {
 
-    private val file = File(plugin.dataFolder, name)
-    private var json: JsonObject = JsonObject()
+    override val file = File(plugin.dataFolder, name)
+    private var config: JsonObject = JsonObject()
 
     init {
-        if (!file.exists()) plugin.saveResource(name, false)
+        if (!file.exists()) {
+            file.parentFile?.mkdirs()
+            try { plugin.saveResource(name, false) }
+            catch (_: IllegalArgumentException) { file.createNewFile() }
+        }
         load()
     }
 
     override fun load(): JsonObject {
-        val text = file.readText(Charsets.UTF_8)
-        json = Gson().fromJson(text, JsonObject::class.java) ?: JsonObject()
-        return json
+        val text = file.takeIf { it.exists() }?.readText(Charsets.UTF_8) ?: "{}"
+        config = Gson().fromJson(text, JsonObject::class.java) ?: JsonObject()
+        return config
     }
 
     override fun save() {
-        file.writeText(Gson().toJson(json), Charsets.UTF_8)
+        file.writeText(Gson().toJson(config), Charsets.UTF_8)
     }
 
     override fun reload() {
@@ -33,12 +40,10 @@ class JsonConfigFile(private val plugin: FolraPlugin, private val name: String) 
 
     override fun exists(): Boolean = file.exists()
 
-    override fun getFile(): File = file
-
     override fun write(path: String, value: Any) {
         val parts = path.split(".")
-        var current = json
-        for (i in 0 until parts.size - 1) {
+        var current = config
+        for (i in 0 until parts.lastIndex) {
             val key = parts[i]
             if (!current.has(key) || !current[key].isJsonObject) {
                 current.add(key, JsonObject())
@@ -46,22 +51,22 @@ class JsonConfigFile(private val plugin: FolraPlugin, private val name: String) 
             current = current[key].asJsonObject
         }
         current.add(parts.last(), Gson().toJsonTree(value))
-        reload()
+        save()
     }
 
     override fun remove(path: String) {
         val parts = path.split(".")
-        var current: JsonObject = json
-        for (i in 0 until parts.size - 1) {
+        var current = config
+        for (i in 0 until parts.lastIndex) {
             val key = parts[i]
             if (!current.has(key) || !current[key].isJsonObject) return
             current = current[key].asJsonObject
         }
         current.remove(parts.last())
-        reload()
+        save()
     }
 
-    override fun isEmpty(): Boolean = json.entrySet().isEmpty()
+    override fun isEmpty(): Boolean = config.entrySet().isEmpty()
 
     inline fun <reified V> getValue(path: String): V? {
         val parts = path.split(".")
@@ -77,5 +82,5 @@ class JsonConfigFile(private val plugin: FolraPlugin, private val name: String) 
         }
     }
 
-    fun getJson(): JsonObject = json
+    fun getJson(): JsonObject = config
 }

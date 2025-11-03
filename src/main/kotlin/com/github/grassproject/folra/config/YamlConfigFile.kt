@@ -6,10 +6,13 @@ import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.io.InputStreamReader
 
-class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) : IConfigFile<FileConfiguration> {
+class YamlConfigFile(
+    private val plugin: FolraPlugin,
+    private val name: String
+) : IConfigFile<FileConfiguration> {
 
-    private val file = File(plugin.dataFolder, name)
-    private var config: FileConfiguration = YamlConfiguration.loadConfiguration(file)
+    override val file = File(plugin.dataFolder, name)
+    private var config: FileConfiguration = YamlConfiguration()
 
     init {
         if (!file.exists()) {
@@ -22,13 +25,11 @@ class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) 
 
     override fun load(): FileConfiguration {
         config = YamlConfiguration.loadConfiguration(file)
-
-        plugin.getResource(name)?.let { stream ->
+        plugin.getResource(name)?.use { stream ->
             val defaults = YamlConfiguration.loadConfiguration(InputStreamReader(stream, Charsets.UTF_8))
-            config.options().copyDefaults(true)
             config.setDefaults(defaults)
+            config.options().copyDefaults(true)
         }
-
         save()
         return config
     }
@@ -43,16 +44,17 @@ class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) 
     }
 
     override fun exists(): Boolean = file.exists()
-    override fun getFile(): File = file
 
     override fun write(path: String, value: Any) {
         config.set(path, value)
-        reload()
+        save()
     }
 
     override fun remove(path: String) {
-        if (config.contains(path)) config.set(path, null)
-        reload()
+        if (config.contains(path)) {
+            config.set(path, null)
+            save()
+        }
     }
 
     override fun isEmpty(): Boolean = config.getKeys(false).isEmpty()
@@ -68,4 +70,3 @@ class YamlConfigFile(private val plugin: FolraPlugin, private val name: String) 
 
     fun getConfig(): FileConfiguration = config
 }
-
