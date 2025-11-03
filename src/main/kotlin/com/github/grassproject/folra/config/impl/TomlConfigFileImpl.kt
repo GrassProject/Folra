@@ -3,14 +3,16 @@ package com.github.grassproject.folra.config.impl
 import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.config.AbstractConfigFile
 
+typealias TomlSectionMap = MutableMap<String, MutableMap<String, String>>
+
 class TomlConfigFileImpl(
     plugin: FolraPlugin,
     name: String
-) : AbstractConfigFile<MutableMap<String, MutableMap<String, String>>>(plugin, name) {
+) : AbstractConfigFile<TomlSectionMap>(plugin, name) {
 
-    override var configuration: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
+    override var configuration: TomlSectionMap = mutableMapOf()
 
-    override fun load(): MutableMap<String, MutableMap<String, String>> {
+    override fun load(): TomlSectionMap {
         configuration.clear()
         var currentSection: String? = null
 
