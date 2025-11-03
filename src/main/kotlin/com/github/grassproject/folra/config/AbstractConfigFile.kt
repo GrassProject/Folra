@@ -1,6 +1,7 @@
 package com.github.grassproject.folra.config
 
 import com.github.grassproject.folra.api.FolraPlugin
+import com.google.gson.Gson
 import java.io.File
 
 abstract class AbstractConfigFile<T>(
@@ -8,7 +9,6 @@ abstract class AbstractConfigFile<T>(
     protected val name: String
 ) {
     open val file: File = File(plugin.dataFolder, name)
-
     protected abstract var config: T
 
     init {
@@ -21,13 +21,9 @@ abstract class AbstractConfigFile<T>(
     }
 
     abstract fun load(): T
-
     abstract fun save()
-
     abstract fun write(path: String, value: Any)
-
     abstract fun remove(path: String)
-
     abstract fun isEmpty(): Boolean
 
     fun getConfig(): T = config
@@ -42,10 +38,21 @@ abstract class AbstractConfigFile<T>(
         load()
     }
 
+    fun getContent(): String = file.readText()
     fun exists(): Boolean = file.exists()
-
     fun delete(): Boolean = file.delete()
 
-    fun getContent(): String = file.readText()
+    fun backup(suffix: String = ".bak"): Boolean {
+        return try {
+            file.copyTo(File(file.parentFile, "$name$suffix"), overwrite = true)
+            true
+        } catch (_: Exception) { false }
+    }
+
+    inline fun <reified D : Any> toData(): D? {
+        return try {
+            Gson().fromJson(file.readText(), D::class.java)
+        } catch (_: Exception) { null }
+    }
 
 }

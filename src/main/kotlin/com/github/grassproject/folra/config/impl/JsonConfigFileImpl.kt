@@ -67,9 +67,9 @@ class JsonConfigFileImpl(
 
     fun getJson(): JsonObject = config
 
-    fun <D : Any> toData(dataClass: Class<D>): D? {
-        return file.reader().use { reader ->
-            Gson().fromJson(reader, dataClass)
-        }
-    }
+//    fun <D : Any> toData(dataClass: Class<D>): D? {
+//        return file.reader().use { reader ->
+//            Gson().fromJson(reader, dataClass)
+//        }
+//    }
 }

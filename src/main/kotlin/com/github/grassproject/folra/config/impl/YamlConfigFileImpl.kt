@@ -52,5 +52,4 @@ class YamlConfigFileImpl(
         }
     }
 
-    fun getConfig(): FileConfiguration = config
 }
