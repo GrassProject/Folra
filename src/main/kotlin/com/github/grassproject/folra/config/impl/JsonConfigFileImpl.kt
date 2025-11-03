@@ -11,21 +11,21 @@ class JsonConfigFileImpl(
     name: String
 ) : AbstractConfigFile<JsonObject>(plugin, name) {
 
-    override var config: JsonObject = JsonObject()
+    override var configuration: JsonObject = JsonObject()
 
     override fun load(): JsonObject {
         val text = file.takeIf { it.exists() }?.readText(Charsets.UTF_8) ?: "{}"
-        config = Gson().fromJson(text, JsonObject::class.java) ?: JsonObject()
-        return config
+        configuration = Gson().fromJson(text, JsonObject::class.java) ?: JsonObject()
+        return configuration
     }
 
     override fun save() {
-        file.writeText(Gson().toJson(config), Charsets.UTF_8)
+        file.writeText(Gson().toJson(configuration), Charsets.UTF_8)
     }
 
     override fun write(path: String, value: Any) {
         val parts = path.split(".")
-        var current = config
+        var current = configuration
         for (i in 0 until parts.lastIndex) {
             val key = parts[i]
             if (!current.has(key) || !current[key].isJsonObject) {
@@ -39,7 +39,7 @@ class JsonConfigFileImpl(
 
     override fun remove(path: String) {
         val parts = path.split(".")
-        var current = config
+        var current = configuration
         for (i in 0 until parts.lastIndex) {
             val key = parts[i]
             if (!current.has(key) || !current[key].isJsonObject) return
@@ -49,11 +49,11 @@ class JsonConfigFileImpl(
         save()
     }
 
-    override fun isEmpty(): Boolean = config.entrySet().isEmpty()
+    override fun isEmpty(): Boolean = configuration.entrySet().isEmpty()
 
     inline fun <reified V> getValue(path: String): V? {
         val parts = path.split(".")
-        var current: JsonElement = getJson()
+        var current: JsonElement = getConfig()
         for (part in parts) {
             if (!current.isJsonObject || !current.asJsonObject.has(part)) return null
             current = current.asJsonObject.get(part)
@@ -65,7 +65,7 @@ class JsonConfigFileImpl(
         }
     }
 
-    fun getJson(): JsonObject = config
+//    fun getJson(): JsonObject = config
 
 //    fun <D : Any> toData(dataClass: Class<D>): D? {
 //        return file.reader().use { reader ->

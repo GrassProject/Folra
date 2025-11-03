@@ -1,7 +1,7 @@
 package com.github.grassproject.folra.language
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.config.impl.JsonConfigFile
+import com.github.grassproject.folra.config.impl.JsonConfigFileImpl
 import com.github.grassproject.folra.util.message.impl.SimpleMessage
 import com.github.grassproject.folra.util.message.impl.view.MessageView
 import com.google.gson.JsonObject
@@ -11,7 +11,7 @@ class FolraTranslate(plugin: FolraPlugin) {
 
     private val jsonCache: JsonObject = run {
         val lang = plugin.config.getString("language") ?: "korean"
-        val configFile = JsonConfigFile(plugin, "language/$lang.json")
+        val configFile = JsonConfigFileImpl(plugin, "language/$lang.json")
         configFile.load()
     }
 

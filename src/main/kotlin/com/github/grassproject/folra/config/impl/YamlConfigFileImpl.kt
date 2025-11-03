@@ -11,37 +11,37 @@ class YamlConfigFileImpl(
     name: String
 ) : AbstractConfigFile<FileConfiguration>(plugin, name) {
 
-    override var config: FileConfiguration = YamlConfiguration()
+    override var configuration: FileConfiguration = YamlConfiguration()
 
     override fun load(): FileConfiguration {
-        config = YamlConfiguration.loadConfiguration(file)
+        configuration = YamlConfiguration.loadConfiguration(file)
 
         plugin.getResource(name)?.use { stream ->
             val defaults = YamlConfiguration.loadConfiguration(InputStreamReader(stream, Charsets.UTF_8))
-            config.setDefaults(defaults)
-            config.options().copyDefaults(true)
+            configuration.setDefaults(defaults)
+            configuration.options().copyDefaults(true)
         }
         save()
-        return config
+        return configuration
     }
 
     override fun save() {
-        config.save(file)
+        configuration.save(file)
     }
 
     override fun write(path: String, value: Any) {
-        config.set(path, value)
+        configuration.set(path, value)
         save()
     }
 
     override fun remove(path: String) {
-        if (config.contains(path)) {
-            config.set(path, null)
+        if (configuration.contains(path)) {
+            configuration.set(path, null)
             save()
         }
     }
 
-    override fun isEmpty(): Boolean = config.getKeys(false).isEmpty()
+    override fun isEmpty(): Boolean = configuration.getKeys(false).isEmpty()
 
     inline fun <reified V> getValue(path: String): V? {
         val value = getConfig().get(path) ?: return null

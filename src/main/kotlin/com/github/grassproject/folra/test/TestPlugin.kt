@@ -2,6 +2,7 @@ package com.github.grassproject.folra.test
 
 import com.github.grassproject.folra.Folra
 import com.github.grassproject.folra.api.event.register
+import com.github.grassproject.folra.config.impl.JsonConfigFileImpl
 import com.github.grassproject.folra.config.impl.YamlConfigFileImpl
 import com.github.grassproject.folra.test.listener.PlayerListener
 
@@ -17,5 +18,6 @@ class TestPlugin {
         println("aaaaaaaaa ${config.getConfig()}")
         println("aaaaaaaaa ${config.getValue<Boolean>("test")}")
         YamlConfigFileImpl(Folra.INSTANCE, "command.yml").load()
+        JsonConfigFileImpl(Folra.INSTANCE, "command.json").load()
     }
 }

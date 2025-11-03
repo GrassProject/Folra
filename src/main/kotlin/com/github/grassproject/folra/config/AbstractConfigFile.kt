@@ -9,7 +9,7 @@ abstract class AbstractConfigFile<T>(
     protected val name: String
 ) {
     open val file: File = File(plugin.dataFolder, name)
-    protected abstract var config: T
+    protected abstract var configuration: T
 
     init {
         if (!file.exists()) {
@@ -26,17 +26,17 @@ abstract class AbstractConfigFile<T>(
     abstract fun remove(path: String)
     abstract fun isEmpty(): Boolean
 
-    fun getConfig(): T = config
+    fun reload() {
+        save()
+        load()
+    }
 
     fun update(path: String, value: Any) {
         write(path, value)
         save()
     }
 
-    open fun reload() {
-        save()
-        load()
-    }
+    fun getConfig(): T = configuration
 
     fun getContent(): String = file.readText()
     fun exists(): Boolean = file.exists()
