@@ -1,7 +1,7 @@
 package com.github.grassproject.folra.language
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.config.JsonConfigFile
+import com.github.grassproject.folra.config.impl.JsonConfigFile
 import com.github.grassproject.folra.util.message.impl.SimpleMessage
 import com.github.grassproject.folra.util.message.impl.view.MessageView
 import com.google.gson.JsonObject

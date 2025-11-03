@@ -1,28 +1,17 @@
-/*
-package com.github.grassproject.folra.config
+package com.github.grassproject.folra.config.impl
 
 import com.github.grassproject.folra.api.FolraPlugin
+import com.github.grassproject.folra.config.AbstractConfigFile
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import java.io.File
 
-class JsonConfigFile(
-    private val plugin: FolraPlugin,
-    private val name: String
-) : IConfigFile<JsonObject> {
+class JsonConfigFileImpl(
+    plugin: FolraPlugin,
+    name: String
+) : AbstractConfigFile<JsonObject>(plugin, name) {
 
-    override val file = File(plugin.dataFolder, name)
-    private var config: JsonObject = JsonObject()
-
-    init {
-        if (!file.exists()) {
-            file.parentFile?.mkdirs()
-            try { plugin.saveResource(name, false) }
-            catch (_: IllegalArgumentException) { file.createNewFile() }
-        }
-        load()
-    }
+    override var config: JsonObject = JsonObject()
 
     override fun load(): JsonObject {
         val text = file.takeIf { it.exists() }?.readText(Charsets.UTF_8) ?: "{}"
@@ -33,13 +22,6 @@ class JsonConfigFile(
     override fun save() {
         file.writeText(Gson().toJson(config), Charsets.UTF_8)
     }
-
-    override fun reload() {
-        save()
-        load()
-    }
-
-    override fun exists(): Boolean = file.exists()
 
     override fun write(path: String, value: Any) {
         val parts = path.split(".")
@@ -84,5 +66,10 @@ class JsonConfigFile(
     }
 
     fun getJson(): JsonObject = config
+
+    fun <D : Any> toData(dataClass: Class<D>): D? {
+        return file.reader().use { reader ->
+            Gson().fromJson(reader, dataClass)
+        }
+    }
 }
-*/
