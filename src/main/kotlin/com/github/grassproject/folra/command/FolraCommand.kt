@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.permissions.Permission
 import org.bukkit.permissions.PermissionDefault
 
-class FolraCommand(
+open class FolraCommand(
     name: String,
     description: String,
     aliases: MutableList<String>,
