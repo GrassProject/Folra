@@ -24,7 +24,7 @@ class Folra : FolraPlugin() {
 
     override fun enable() {
         TestPlugin()
-        FolraPermission.register()
+        // FolraPermission.register()
 
         FolraCommandImpl.register("folra")
 

@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 object ItemConvertSubCommandImpl : IFolraSubCommand {
+    override val permission: String = "command.folra.itemconvert"
+
     override fun execute(sender: CommandSender, args: Array<out String>) {
         if (sender !is Player) return
 
