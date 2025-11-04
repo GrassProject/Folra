@@ -7,7 +7,7 @@ import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.language.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
 import com.github.grassproject.folra.test.command.impl.HelloCommand
-import com.github.grassproject.folra.util.message.impl.EmptyMessage
+import com.github.grassproject.folra.util.message.Message
 
 class Folra : FolraPlugin() {
 
@@ -34,7 +34,7 @@ class Folra : FolraPlugin() {
             mutableMapOf(
                 "itemcovert" to ItemConvertCommand
             )
-        ) { EmptyMessage() }.register("folra")
+        ) { Message.EMPTY }.register("folra")
 
         FolraCommand(
             "test", "Folra base command", mutableListOf(),
