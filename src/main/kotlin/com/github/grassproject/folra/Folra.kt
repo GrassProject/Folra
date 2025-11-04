@@ -1,13 +1,10 @@
 package com.github.grassproject.folra
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.command.FolraCommand
-import com.github.grassproject.folra.command.impl.ItemConvertCommand
+import com.github.grassproject.folra.command.impl.FolraCommandImpl
 import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.language.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
-import com.github.grassproject.folra.test.command.impl.HelloCommand
-import com.github.grassproject.folra.util.message.Message
 
 class Folra : FolraPlugin() {
 
@@ -29,19 +26,7 @@ class Folra : FolraPlugin() {
         TestPlugin()
         FolraPermission.register()
 
-        FolraCommand(
-            "folra", "Folra base command", mutableListOf(),
-            mutableMapOf(
-                "itemcovert" to ItemConvertCommand
-            )
-        ) { Message.EMPTY }.register("folra")
-
-        FolraCommand(
-            "test", "Folra base command", mutableListOf(),
-            mutableMapOf(
-                "hello" to HelloCommand
-            )
-        ) { translate.getMessage("test") }.register("test")
+        FolraCommandImpl.register("folraa")
 
     }
 

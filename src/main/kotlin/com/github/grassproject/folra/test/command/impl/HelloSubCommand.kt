@@ -1,9 +1,9 @@
 package com.github.grassproject.folra.test.command.impl
 
-import com.github.grassproject.folra.command.IFolraCommand
+import com.github.grassproject.folra.command.IFolraSubCommand
 import org.bukkit.command.CommandSender
 
-object HelloCommand : IFolraCommand {
+object HelloSubCommand : IFolraSubCommand {
     override fun execute(sender: CommandSender, args: Array<out String>) {
         sender.sendMessage("Hello")
     }
