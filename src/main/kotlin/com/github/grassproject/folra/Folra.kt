@@ -26,7 +26,7 @@ class Folra : FolraPlugin() {
         TestPlugin()
         FolraPermission.register()
 
-        FolraCommandImpl.register("folraa")
+        FolraCommandImpl.register("folra")
 
     }
 
