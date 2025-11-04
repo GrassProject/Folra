@@ -30,8 +30,4 @@ class Folra : FolraPlugin() {
 
     }
 
-    override fun disable() {
-        info("FolraPlugin: disable() called")
-    }
-
 }
