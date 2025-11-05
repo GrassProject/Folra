@@ -11,14 +11,13 @@ class SimpleMessage(
     override val view: MessageView = MessageView.Chat
 ) : Message {
 
-    private val components by lazy { messages.map { it.toMiniMessage() } }
-
     override fun send(sender: CommandSender) {
+        val components = messages.map { it.toMiniMessage() }
         view.send(sender, components)
     }
 
     override fun broadcast() {
-        Bukkit.getOnlinePlayers().forEach(::send)
+        Bukkit.getOnlinePlayers().forEach { send(it) }
     }
 
     override fun replace(from: String, to: String): Message =
