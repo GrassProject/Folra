@@ -7,7 +7,7 @@ import org.bukkit.permissions.Permission
 import org.bukkit.permissions.PermissionDefault
 
 object FolraCommandImpl : FolraBaseCommand(
-    "folra", listOf("fa"), "Folra main command",
+    "folra", listOf("fa"), "Folra base command",
     Permission("command.folra", PermissionDefault.OP),
     mutableMapOf(
         "itemconvert" to ItemConvertSubCommandImpl
