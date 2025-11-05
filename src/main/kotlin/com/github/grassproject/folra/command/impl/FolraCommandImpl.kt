@@ -16,7 +16,7 @@ object FolraCommandImpl : FolraBaseCommand(
 ) {
 
     override fun onExecute(sender: CommandSender, args: Array<out String>) {
-        Folra.translate.getMessage("test").send(sender)
+        Folra.translate.message("test").send(sender)
         sender.sendMessage("a")
     }
 

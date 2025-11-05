@@ -8,11 +8,11 @@ interface Message {
     val messages: List<String>
     val view: MessageView
 
-    fun replace(from: String, to: String): Message
-    fun replace(updater: (String) -> String): Message
-
     fun send(sender: CommandSender)
     fun broadcast()
+
+    fun replace(from: String, to: String): Message
+    fun replace(updater: (String) -> String): Message
 
     companion object {
         val EMPTY: Message = EmptyMessage()

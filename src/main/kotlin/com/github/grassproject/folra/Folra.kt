@@ -3,7 +3,7 @@ package com.github.grassproject.folra
 import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.command.impl.FolraCommandImpl
 import com.github.grassproject.folra.command.register
-import com.github.grassproject.folra.language.FolraTranslate
+import com.github.grassproject.folra.util.message.FolraTranslate
 import com.github.grassproject.folra.test.TestPlugin
 
 class Folra : FolraPlugin() {
