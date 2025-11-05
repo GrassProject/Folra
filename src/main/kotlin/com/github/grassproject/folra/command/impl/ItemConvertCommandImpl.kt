@@ -1,12 +1,12 @@
 package com.github.grassproject.folra.command.impl
 
-import com.github.grassproject.folra.command.IFolraSubCommand
+import com.github.grassproject.folra.command.IFolraCommand
 import com.github.grassproject.folra.util.item.ItemEncoder
 import com.github.grassproject.folra.util.toMiniMessage
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-object ItemConvertSubCommandImpl : IFolraSubCommand {
+object ItemConvertCommandImpl : IFolraCommand {
     override val permission: String = "command.folra.itemconvert"
 
     override fun execute(sender: CommandSender, args: Array<out String>) {

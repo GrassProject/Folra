@@ -1,13 +1,13 @@
 package com.github.grassproject.folra.command.impl
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.command.IFolraSubCommand
+import com.github.grassproject.folra.command.IFolraCommand
 import com.github.grassproject.folra.language.FolraTranslate
 import org.bukkit.command.CommandSender
 
-abstract class ReloadSubCommand(
+open class ReloadCommand(
     val plugin: FolraPlugin
-) : IFolraSubCommand {
+) : IFolraCommand {
     override val permission: String = "command.${plugin.name}.reload"
 
     override fun execute(sender: CommandSender, args: Array<out String>) {
@@ -18,5 +18,5 @@ abstract class ReloadSubCommand(
         onReload(sender, args)
     }
 
-    protected abstract fun onReload(sender: CommandSender, args: Array<out String>)
+    protected open fun onReload(sender: CommandSender, args: Array<out String>) {}
 }

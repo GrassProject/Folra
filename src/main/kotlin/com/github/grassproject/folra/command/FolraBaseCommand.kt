@@ -11,7 +11,7 @@ abstract class FolraBaseCommand(
     aliases: List<String> = emptyList(),
     description: String = "",
     permission: Permission? = null,
-    val subCommands: MutableMap<String, IFolraSubCommand> = mutableMapOf(),
+    val subCommands: MutableMap<String, IFolraCommand> = mutableMapOf(),
     val helpMessage: () -> Message = { Message.EMPTY }
 ) : Command(name, description, "/$name", aliases) {
 

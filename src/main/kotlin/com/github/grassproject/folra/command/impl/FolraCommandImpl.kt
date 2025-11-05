@@ -10,7 +10,8 @@ object FolraCommandImpl : FolraBaseCommand(
     "folra", listOf("fa"), "Folra base command",
     Permission("command.folra", PermissionDefault.OP),
     mutableMapOf(
-        "itemconvert" to ItemConvertSubCommandImpl
+        "reload" to ReloadCommand(Folra.INSTANCE),
+        "itemconvert" to ItemConvertCommandImpl
     )
 ) {
 

@@ -2,7 +2,7 @@ package com.github.grassproject.folra.command
 
 import org.bukkit.command.CommandSender
 
-interface IFolraSubCommand {
+interface IFolraCommand {
     val permission: String?
         get() = null
 
