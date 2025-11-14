@@ -1,10 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    java
-    `java-library`
     kotlin("jvm") version "2.2.21"
     id("com.gradleup.shadow") version "9.2.2"
+    id("java")
+    `java-library`
 }
 
 group = "com.github.grassproject.folra"
@@ -12,11 +12,7 @@ version = "1.2.2-BETA"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "papermc"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
-
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.nexomc.com/releases")
     maven("https://repo.momirealms.net/releases/")
     maven("https://maven.devs.beer/")
