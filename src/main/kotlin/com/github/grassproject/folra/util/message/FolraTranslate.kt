@@ -7,12 +7,18 @@ import com.github.grassproject.folra.util.message.impl.view.MessageView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
-class FolraTranslate(plugin: FolraPlugin) {
+class FolraTranslate(private val plugin: FolraPlugin) {
 
-    private val jsonCache: JsonObject = run {
+    private var jsonCache: JsonObject = loadLanguage()
+
+    private fun loadLanguage(): JsonObject {
         val lang = plugin.config.getString("language") ?: "korean"
         val configFile = JsonConfigFileImpl(plugin, "language/$lang.json")
-        configFile.load()
+        return configFile.load()
+    }
+
+    fun reload() {
+        jsonCache = loadLanguage()
     }
 
     fun literate(key: String, placeholders: Map<String, String> = emptyMap()): String {

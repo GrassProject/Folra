@@ -4,7 +4,7 @@ import com.github.grassproject.folra.api.FolraPlugin
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 
-object FolraLogger(private val plugin: FolraPlugin? = null) {
+class FolraLogger(private val plugin: FolraPlugin? = null) {
     private val prefix = "<#96f19c>{gp-prefix}</#96f19c><#989c99> > </#989c99>"
 
     private fun format(color: String, message: String): Component {

@@ -13,7 +13,7 @@ open class ReloadCommand(
     override fun execute(sender: CommandSender, args: Array<out String>) {
         plugin.saveDefaultConfig()
         plugin.reloadConfig()
-        FolraTranslate(plugin)
+        FolraTranslate(plugin).reload()
 
         onReload(sender, args)
     }
