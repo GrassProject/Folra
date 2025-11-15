@@ -30,7 +30,6 @@ dependencies {
     compileOnly("net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
-    implementation(project(":API"))
     // implementation(project("NMS:1_21_8"))
 }
 

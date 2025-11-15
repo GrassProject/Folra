@@ -9,7 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/API" />
             <option value="$PROJECT_DIR$/NMS_1_21_8" />
           </set>
         </option>

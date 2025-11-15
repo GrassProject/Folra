@@ -3,5 +3,4 @@ plugins {
 }
 rootProject.name = "Folra"
 
-include("API")
 include("NMS_1_21_8")

@@ -1,10 +1,7 @@
 package com.github.grassproject.folra
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.command.impl.FolraCommandImpl
-import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.util.message.FolraTranslate
-import com.github.grassproject.folra.test.TestPlugin
 
 class Folra : FolraPlugin() {
 
@@ -23,10 +20,6 @@ class Folra : FolraPlugin() {
     }
 
     override fun enable() {
-        TestPlugin()
-        // FolraPermission.register()
-
-        FolraCommandImpl.register("folra")
 
     }
 
