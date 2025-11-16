@@ -16,7 +16,6 @@ repositories {
     maven("https://repo.nexomc.com/releases")
     maven("https://repo.momirealms.net/releases/")
     maven("https://maven.devs.beer/")
-    maven("https://nexus.phoenixdevt.fr/repository/maven-public/")
     maven("https://repo.extendedclip.com/releases/")
 }
 
@@ -27,10 +26,10 @@ dependencies {
     compileOnly("net.momirealms:craft-engine-core:0.0.64")
     compileOnly("net.momirealms:craft-engine-bukkit:0.0.64")
     compileOnly("dev.lone:api-itemsadder:4.0.10")
-    compileOnly("net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     // implementation(project("NMS:1_21_8"))
+    implementation("com.zaxxer:HikariCP:7.0.2")
 }
 
 kotlin {
