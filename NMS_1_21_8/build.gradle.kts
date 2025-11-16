@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
-
+    compileOnly(project(":"))
     compileOnly("net.kyori:adventure-text-serializer-gson:4.20.0")
 }
 

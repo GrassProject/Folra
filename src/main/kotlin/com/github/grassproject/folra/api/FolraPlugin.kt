@@ -2,6 +2,7 @@ package com.github.grassproject.folra.api
 
 import com.github.grassproject.folra.api.event.FolraPluginRegisterEvent
 import com.github.grassproject.folra.api.event.FolraPluginUnregisterEvent
+import com.github.grassproject.folra.util.FolraLogger
 import org.bukkit.plugin.java.JavaPlugin
 
 abstract class FolraPlugin : JavaPlugin(), IFolraPlugin {
@@ -21,7 +22,7 @@ abstract class FolraPlugin : JavaPlugin(), IFolraPlugin {
         FolraPluginRegisterEvent(this).callEvent()
         enable()
 
-        info("Registered plugin $name")
+        FolraLogger.info("Registered plugin $name")
     }
 
     override fun onDisable() {

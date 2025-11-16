@@ -1,6 +1,9 @@
 package com.github.grassproject.folra
 
 import com.github.grassproject.folra.api.FolraPlugin
+import com.github.grassproject.folra.command.impl.FolraCommand
+import com.github.grassproject.folra.command.register
+import com.github.grassproject.folra.command.withPermission
 
 class Folra : FolraPlugin() {
 
@@ -16,7 +19,9 @@ class Folra : FolraPlugin() {
     }
 
     override fun enable() {
-
+        FolraCommand().apply {
+            withPermission("folra.admin")
+        }.register("folra")
     }
 
 }

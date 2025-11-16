@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.grassproject.folra"
-version = "1.2.2-BETA"
+version = "1.2.2a-BETA"
 
 repositories {
     mavenCentral()
