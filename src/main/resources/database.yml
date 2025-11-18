@@ -8,5 +8,3 @@ database:
     password: password
   pool_options:
     size: 10
-  sqlite:
-    path: plugins/MyPlugin/sqlite.db

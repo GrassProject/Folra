@@ -16,7 +16,10 @@ class DatabaseManager(
     lateinit var dataSource: HikariDataSource
         private set
 
-    val config by lazy { YamlConfigFile(plugin, "database.yml").load() }
+    private val config by lazy {
+        val file = YamlConfigFile(plugin, "database.yml")
+        file.load()
+    }
 
     fun init() {
         dataSource = when (config.getString("database.type")?.uppercase()) {
@@ -37,11 +40,16 @@ class DatabaseManager(
     }
 
     private fun initSQLite(): HikariDataSource {
-        val path = config.getString("database.sqlite.path")
-            ?: File(plugin.dataFolder, "sqlite.db").absolutePath
-        val file = File(path)
-        if (!file.exists()) file.parentFile.mkdirs()
-        return SQLIteDataSource(path)
+        val file = File(plugin.dataFolder, "sqlite.db")
+        if (!file.exists()) {
+            file.parentFile?.mkdirs()
+            try { file.createNewFile() }
+            catch (e: Exception) {
+                plugin.logger.severe("SQLite 파일 생성 실패: ${file.path}")
+                e.printStackTrace()
+            }
+        }
+        return SQLIteDataSource(file.path)
     }
 
     fun getConnection(): Connection = dataSource.connection

@@ -4,6 +4,7 @@ import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.command.impl.FolraCommand
 import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.command.withPermission
+import com.github.grassproject.folra.config.impl.YamlConfigFile
 import com.github.grassproject.folra.database.DatabaseManager
 import com.github.grassproject.folra.util.message.FolraTranslate
 
@@ -25,6 +26,7 @@ class Folra : FolraPlugin() {
     }
 
     override fun enable() {
+        YamlConfigFile(this, "config.yml")
         TRANSLATE.init()
 
         FolraCommand(this).apply {
