@@ -24,7 +24,7 @@ class Folra : FolraPlugin() {
     }
 
     override fun enable() {
-        FolraCommand().apply {
+        FolraCommand(this).apply {
             withPermission("folra.admin")
         }.register("folra")
     }

@@ -18,35 +18,24 @@ open class FolraTranslate(private val plugin: FolraPlugin) {
 
     private fun loadLanguage() {
         plugin.reloadConfig()
-
         val lang = plugin.config.getString("language") ?: "ko-kr"
         val langFolder = File(plugin.dataFolder, "language").apply { mkdirs() }
         val jsonFile = File(langFolder, "$lang.json")
-
         if (!jsonFile.exists()) plugin.saveResource("language/$lang.json", false)
 
         langConfig = JsonConfigFile(plugin, "language/$lang.json").apply { load() }
         jsonData = langConfig.config
         prefix = jsonData.get("prefix")?.asString ?: ""
+        Companion.prefix = prefix
     }
 
-    private fun applyPlaceholders(message: String, placeholders: Map<String, String>?): String {
-        var result = message.replace("<prefix>", prefix)
-        placeholders?.forEach { (p, v) -> result = result.replace("{$p}", v) }
-        return result
-    }
+    fun literate(key: String, placeholders: Map<String, String>? = null): String =
+        (jsonData.get(key)?.asString ?: key).applyPlaceholders(prefix, placeholders)
 
-    fun literate(key: String, placeholders: Map<String, String>? = null): String {
-        val message = jsonData.get(key)?.asString ?: key
-        return applyPlaceholders(message, placeholders)
-    }
-
-    fun fromList(key: String, placeholders: Map<String, String>? = null): MutableList<String> {
-        val array = jsonData.get(key)?.asJsonArray ?: return mutableListOf()
-        return array.mapNotNull { it.asString }
-            .map { applyPlaceholders(it, placeholders) }
-            .toMutableList()
-    }
+    fun fromList(key: String, placeholders: Map<String, String>? = null): List<String> =
+        jsonData.get(key)?.asJsonArray
+            ?.map { it.asString.applyPlaceholders(prefix, placeholders) }
+            ?: emptyList()
 
     fun component(key: String, placeholders: Map<String, String>? = null): Component =
         literate(key, placeholders).toMiniMessage()
@@ -54,11 +43,23 @@ open class FolraTranslate(private val plugin: FolraPlugin) {
     fun componentList(key: String, placeholders: Map<String, String>? = null): List<Component> =
         fromList(key, placeholders).map { it.toMiniMessage() }
 
-//    fun component(
-//        key: String,
-//        placeholders: Map<String, String>? = null
-//    ): Component {
-//        return literate(key, placeholders).toComponent()
-//    }
+    companion object {
+        var prefix: String = ""
+
+        fun String.applyPlaceholders(
+            prefix: String? = null,
+            placeholders: Map<String, String>? = null
+        ): String {
+            val usePrefix = prefix ?: Companion.prefix
+            var result = replace("<prefix>", usePrefix)
+            placeholders?.forEach { (p, v) -> result = result.replace("{$p}", v) }
+            return result
+        }
+
+        fun String.toComponentWithPlaceholders(
+            prefix: String? = null,
+            placeholders: Map<String, String>? = null
+        ): Component = applyPlaceholders(prefix, placeholders).toMiniMessage()
+    }
 
 }
