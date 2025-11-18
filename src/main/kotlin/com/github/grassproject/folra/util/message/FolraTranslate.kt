@@ -1,4 +1,4 @@
-package com.github.grassproject.folra.message
+package com.github.grassproject.folra.util.message
 
 import com.google.gson.JsonObject
 import com.github.grassproject.folra.api.FolraPlugin
