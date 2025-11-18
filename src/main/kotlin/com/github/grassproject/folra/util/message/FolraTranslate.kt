@@ -16,7 +16,7 @@ open class FolraTranslate(private val plugin: FolraPlugin) {
     fun init() = loadLanguage()
     fun reload() = loadLanguage()
 
-    fun loadLanguage() {
+    private fun loadLanguage() {
         plugin.reloadConfig()
 
         val lang = plugin.config.getString("language") ?: "ko-kr"

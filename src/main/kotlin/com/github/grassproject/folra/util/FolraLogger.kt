@@ -5,11 +5,12 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 
 class FolraLogger(private val plugin: FolraPlugin? = null) {
-    private val prefix = "<#96f19c>{gp-prefix}</#96f19c><#989c99> > </#989c99>"
+    private val prefix = "<#96f19c>{plugin}</#96f19c><#989c99> | </#989c99>"
+        // "<#96f19c>{gp-prefix}</#96f19c><#989c99> > </#989c99>"
 
     private fun format(color: String, message: String): Component {
         val name = plugin?.name ?: "Folra"
-        return "${prefix.replace("{gp-prefix}", name)}<$color>$message</$color>".toMiniMessage()
+        return "${prefix.replace("{plugin}", name)}<$color>$message</$color>".toMiniMessage()
     }
 
     fun info(string: String) = send("white", string)

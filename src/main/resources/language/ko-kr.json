@@ -1,0 +1,19 @@
+{
+  "prefix": "<#96f19c>Folra</#96f19c><#989c99> | </#989c99>",
+
+  "framework.find.update":[
+    "New Version Released! Download >> {link}",
+    "New: {new}, Now: {now} ( At. {date} )"
+  ],
+
+  "command.folra.info": [
+    "<prefix> <bold> - <green>버킷 정보",
+    "<bold>↪ 서버: <gray>{server}",
+    "<bold>↪ 버전: <gray>{version}",
+    "<bold>↪ NMS: <gray>{nms}",
+    "<bold> - <green>프레임워크 정보",
+    "<bold>↪ 이름: <gray>{name}",
+    "<bold>↪ 버전: <gray>{plugin-version}",
+    "<bold>↪ 플러그인 리스트: <gray>{list}"
+  ]
+}
