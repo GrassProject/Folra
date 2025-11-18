@@ -5,7 +5,7 @@ import com.github.grassproject.folra.util.McLogsUtil
 import com.github.grassproject.folra.util.message.FolraTranslate.Companion.toComponentWithPlaceholders
 import org.bukkit.command.CommandSender
 
-object DumpLogCommand : FolraBaseCommand(
+object                                                                                                                                                                                                               DumpLogCommand : FolraBaseCommand(
     "dumplog", "dumplog command", listOf(), mutableListOf()
 ) {
     override fun executeCommand(sender: CommandSender, args: Array<out String>) {

@@ -16,7 +16,6 @@ abstract class AbstractConfigFile<T>(
             try { plugin.saveResource(name, false) }
             catch (_: IllegalArgumentException) { file.createNewFile() }
         }
-        load()
     }
 
     abstract fun load(): T

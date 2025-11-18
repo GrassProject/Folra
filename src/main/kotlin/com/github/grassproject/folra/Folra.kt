@@ -4,6 +4,7 @@ import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.command.impl.FolraCommand
 import com.github.grassproject.folra.command.register
 import com.github.grassproject.folra.command.withPermission
+import com.github.grassproject.folra.database.DatabaseManager
 import com.github.grassproject.folra.util.message.FolraTranslate
 
 class Folra : FolraPlugin() {
@@ -15,18 +16,27 @@ class Folra : FolraPlugin() {
             }
 
         lateinit var TRANSLATE: FolraTranslate
+        lateinit var DATABASE: DatabaseManager
     }
 
     override fun load() {
         FolraPlugin.INSTANCE = this
         TRANSLATE = FolraTranslate(this)
-        TRANSLATE.init()
     }
 
     override fun enable() {
+        TRANSLATE.init()
+
         FolraCommand(this).apply {
             withPermission("folra.admin")
         }.register("folra")
+
+        DATABASE = DatabaseManager(this)
+        DATABASE.init()
+    }
+
+    override fun disable() {
+        DATABASE.close()
     }
 
 }

@@ -58,6 +58,11 @@ tasks.register<ShadowJar>("shadowJarPlugin") {
     exclude("org/slf4j/**")
 }
 
+tasks.test {
+    useJUnitPlatform()
+    failOnNoDiscoveredTests = false
+}
+
 tasks {
     build {
         dependsOn("shadowJarPlugin")

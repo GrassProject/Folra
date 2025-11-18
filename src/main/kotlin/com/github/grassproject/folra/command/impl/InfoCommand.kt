@@ -17,7 +17,7 @@ class InfoCommand(val plugin: FolraPlugin) : FolraBaseCommand(
                 "nms" to plugin.server.bukkitVersion,
                 "name" to plugin.name,
                 "plugin-version" to plugin.pluginMeta.version,
-                "list" to FolraPlugin.PLUGINS.joinToString(", ")
+                "list" to FolraPlugin.PLUGINS.joinToString(", ") { it.name }
             )
         )
         message.forEach { sender.sendMessage(it) }
