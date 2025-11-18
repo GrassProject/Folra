@@ -30,6 +30,10 @@ dependencies {
 
     // implementation(project("NMS:1_21_8"))
     implementation("com.zaxxer:HikariCP:7.0.2")
+
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
+    testImplementation("com.google.code.gson:gson:2.13.2")
 }
 
 kotlin {
