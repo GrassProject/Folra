@@ -8,7 +8,7 @@ load: STARTUP
 website: https://grassproject.github.io
 
 main: com.github.grassproject.folra.Folra
-# loader: com.github.grassproject.folra.loader.FolraLoader
+loader: com.github.grassproject.folra.loader.FolraLoader
 
 dependencies:
   server:
