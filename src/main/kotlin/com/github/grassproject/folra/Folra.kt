@@ -17,7 +17,6 @@ class Folra : FolraPlugin() {
             }
 
         lateinit var TRANSLATE: FolraTranslate
-        lateinit var DATABASE: DatabaseManager
     }
 
     override fun load() {
@@ -33,12 +32,8 @@ class Folra : FolraPlugin() {
             withPermission("folra.admin")
         }.register("folra")
 
-        DATABASE = DatabaseManager(this)
-        DATABASE.init()
-    }
+        DatabaseManager(this).loadDatabase()
 
-    override fun disable() {
-        DATABASE.close()
     }
 
 }

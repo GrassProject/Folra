@@ -24,7 +24,7 @@ open class FolraTranslate(private val plugin: FolraPlugin) {
         if (!jsonFile.exists()) plugin.saveResource("language/$lang.json", false)
 
         langConfig = JsonConfigFile(plugin, "language/$lang.json").apply { load() }
-        jsonData = langConfig.config
+        jsonData = langConfig.getConfig()
         prefix = jsonData.get("prefix")?.asString ?: ""
         Companion.prefix = prefix
     }

@@ -1,91 +1,39 @@
 package com.github.grassproject.folra.database
 
-import com.github.grassproject.folra.config.impl.YamlConfigFile
 import com.github.grassproject.folra.api.FolraPlugin
-import com.zaxxer.hikari.HikariDataSource
+import com.github.grassproject.folra.config.impl.YamlConfigFile
 import java.io.File
-import java.sql.Connection
-import java.sql.PreparedStatement
-import java.sql.ResultSet
 
 class DatabaseManager(
-    private val plugin: FolraPlugin,
-    // private val configFile: YamlConfigFile = YamlConfigFile(plugin, "database.yml")
+    private val plugin: FolraPlugin
 ) {
 
-    lateinit var dataSource: HikariDataSource
-        private set
+    private var driver: DataDriver? = null
 
-    private val config by lazy {
+    fun loadDatabase() {
+        plugin.dataFolder.mkdirs()
         val file = YamlConfigFile(plugin, "database.yml")
         file.load()
-    }
 
-    fun init() {
-        dataSource = when (config.getString("database.type")?.uppercase()) {
-            "MYSQL" -> initMySQL()
-            "SQLITE", null -> initSQLite()
-            else -> throw IllegalArgumentException("지원하지 않는 데이터베이스 타입: ${config.getString("database.type")}")
+        val config = file.getConfig()
+        val type = config.getString("database.type", "SQLITE")!!
+
+        driver = if (type.uppercase() == "SQLITE") {
+            val file = File(plugin.dataFolder, "sqlite.db")
+            file.createNewFile()
+            SQLiteDriver(file.path)
+        } else {
+            val host = config.getString("database.credentials.host") ?: "localhost"
+            val port = config.getInt("database.credentials.port", 3306)
+            val database = config.getString("database.credentials.database") ?: "database"
+            val username = config.getString("database.credentials.username") ?: "root"
+            val password = config.getString("database.credentials.password") ?: "password"
+            val maxPoolSize = config.getInt("database.pool_options.size", 10)
+            MySqlDriver(host, port, database, username, password, maxPoolSize)
         }
     }
 
-    private fun initMySQL(): HikariDataSource {
-        val host = config.getString("database.credentials.host") ?: "localhost"
-        val port = config.getInt("database.credentials.port", 3306)
-        val database = config.getString("database.credentials.database") ?: "database"
-        val username = config.getString("database.credentials.username") ?: "root"
-        val password = config.getString("database.credentials.password") ?: "password"
-        val maxPoolSize = config.getInt("database.pool_options.size", 10)
-        return MySQLDataSource(host, port, database, username, password, maxPoolSize)
-    }
-
-    private fun initSQLite(): HikariDataSource {
-        val file = File(plugin.dataFolder, "sqlite.db")
-        if (!file.exists()) {
-            file.parentFile?.mkdirs()
-            try { file.createNewFile() }
-            catch (e: Exception) {
-                plugin.logger.severe("SQLite 파일 생성 실패: ${file.path}")
-                e.printStackTrace()
-            }
-        }
-        return SQLIteDataSource(file.path)
-    }
-
-    fun getConnection(): Connection = dataSource.connection
-
-    private inline fun <T> useConnection(block: (Connection) -> T): T =
-        getConnection().use(block)
-
-    private inline fun <T> Connection.usePrepare(sql: String, params: Array<out Any>, block: (PreparedStatement) -> T): T {
-        prepareStatement(sql).use { stmt ->
-            params.forEachIndexed { index, param -> stmt.setObject(index + 1, param) }
-            return block(stmt)
-        }
-    }
-
-    fun execute(sql: String, vararg params: Any): Boolean =
-        useConnection { conn -> conn.usePrepare(sql, params) { it.execute() } }
-
-    fun query(sql: String, vararg params: Any, block: (ResultSet) -> Unit) =
-        useConnection { conn -> conn.usePrepare(sql, params) { it.executeQuery().use(block) } }
-
-    fun <T> transaction(block: (Connection) -> T): T =
-        useConnection { conn ->
-            conn.autoCommit = false
-            try {
-                val result = block(conn)
-                conn.commit()
-                result
-            } catch (e: Exception) {
-                conn.rollback()
-                throw e
-            }
-        }
-
-    fun close() {
-        if (this::dataSource.isInitialized) {
-            dataSource.close()
-        }
+    fun getDataDriver(): DataDriver {
+        return driver ?: throw IllegalStateException("Database not loaded. Call loadDatabase() first.")
     }
 }

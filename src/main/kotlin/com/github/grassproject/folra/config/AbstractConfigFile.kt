@@ -34,8 +34,7 @@ abstract class AbstractConfigFile<T>(
         save()
     }
 
-    val config: T
-        get() = configuration
+    fun getConfig(): T = configuration
 
     fun getContent(): String = file.readText()
 
