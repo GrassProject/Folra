@@ -6,11 +6,8 @@
 
 ```gradle
 repositories {
-    mavenCentral()
     maven { url = uri("https://jitpack.io") }
 }
-
-
 
 dependencies {
     compileOnly("com.github.GrassProject:Folra:Tag")
