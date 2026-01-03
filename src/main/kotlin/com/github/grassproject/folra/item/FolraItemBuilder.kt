@@ -16,13 +16,14 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemStack
-import java.util.Locale
+import java.util.*
 
-class FolraItemBuilder(
+class FrixelItemBuilder(
     private val baseItem: ItemStack
 ) {
 
-    constructor(material: Material) : this(ItemStack(material))
+    constructor(material: Material): this(ItemStack(material))
+    constructor(namespace: String): this(ItemHandler.itemStackById(namespace) ?: ItemStack(Material.AIR))
 
     private val resultItem = baseItem.clone()
 
@@ -124,7 +125,7 @@ class FolraItemBuilder(
         resultItem.setData(DataComponentTypes.UNBREAKABLE)
     }
 
-    fun getBaseItem(): ItemStack = baseItem
+    fun getBaseItem(): ItemStack = baseItem.clone()
 
     fun build(): ItemStack = resultItem.clone()
 
@@ -134,3 +135,18 @@ class FolraItemBuilder(
             .get(NamespacedKey.minecraft(name.lowercase(Locale.getDefault())))
     }
 }
+
+inline fun frixelItemBuilder(
+    material: Material,
+    block: FrixelItemBuilder.() -> Unit
+) = FrixelItemBuilder(material).apply(block)
+
+inline fun frixelItemBuilder(
+    namespace: String,
+    block: FrixelItemBuilder.() -> Unit
+) = FrixelItemBuilder(namespace).apply(block)
+
+inline fun frixelItemBuilder(
+    base: ItemStack,
+    block: FrixelItemBuilder.() -> Unit
+) = FrixelItemBuilder(base).apply(block)

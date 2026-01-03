@@ -1,5 +1,9 @@
 package com.github.grassproject.folra.command
 
+import com.github.grassproject.folra.api.FolraPlugin
+import com.mojang.brigadier.tree.LiteralCommandNode
+import io.papermc.paper.command.brigadier.CommandSourceStack
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.permissions.Permission
@@ -35,4 +39,10 @@ fun Command.withPermission(permission: String, default: PermissionDefault = Perm
 
 fun FolraBaseCommand.addSubCommand(sub: FolraBaseCommand) {
     this.subCommands.add(sub)
+}
+
+fun LiteralCommandNode<CommandSourceStack>.register(plugin: FolraPlugin) {
+    plugin.lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS) {
+        it.registrar().register(this)
+    }
 }
