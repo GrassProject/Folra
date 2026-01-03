@@ -3,7 +3,7 @@ package com.github.grassproject.folra.util.bossbar
 import net.kyori.adventure.bossbar.BossBar
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
-import java.util.EnumSet
+import java.util.*
 
 class FolraBossBar(
     title: Component,

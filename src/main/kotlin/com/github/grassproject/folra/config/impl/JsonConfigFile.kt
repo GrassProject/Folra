@@ -3,7 +3,6 @@ package com.github.grassproject.folra.config.impl
 import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.config.AbstractConfigFile
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 
 class JsonConfigFile(

@@ -1,6 +1,6 @@
 package com.github.grassproject.folra.test
 
-import java.util.UUID
+import java.util.*
 
 // CMI USER
 data class FolraUser(

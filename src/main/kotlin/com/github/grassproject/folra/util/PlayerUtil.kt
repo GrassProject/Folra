@@ -2,7 +2,7 @@ package com.github.grassproject.folra.util
 
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.UUID
+import java.util.*
 
 fun UUID.toOfflinePlayer(): OfflinePlayer {
     return Bukkit.getOfflinePlayer(this)

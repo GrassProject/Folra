@@ -1,9 +1,9 @@
 package com.github.grassproject.folra.util.message
 
-import com.google.gson.JsonObject
 import com.github.grassproject.folra.api.FolraPlugin
 import com.github.grassproject.folra.config.impl.JsonConfigFile
 import com.github.grassproject.folra.util.toMiniMessage
+import com.google.gson.JsonObject
 import net.kyori.adventure.text.Component
 import java.io.File
 

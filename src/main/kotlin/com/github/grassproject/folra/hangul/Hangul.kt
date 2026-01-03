@@ -1,7 +1,5 @@
 package com.github.grassproject.folra.hangul
 
-import kotlin.text.iterator
-
 class Hangul {
     fun isHangul(input: String): Boolean {
         if (input.length >= 20) {

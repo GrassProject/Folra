@@ -1,6 +1,5 @@
 package com.github.grassproject.folra.api.integration
 
-import com.github.frixel.frixelengine.api.integration.ExternalProvider
 import org.bukkit.block.Block
 import org.bukkit.entity.Entity
 import org.bukkit.inventory.ItemStack
