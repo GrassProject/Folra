@@ -18,9 +18,7 @@ import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
-class FolraItemBuilder(
-    private val baseItem: ItemStack
-) {
+class FolraItemBuilder(private val baseItem: ItemStack) {
 
     constructor(material: Material): this(ItemStack(material))
     constructor(namespace: String): this(ItemHandler.itemStackById(namespace) ?: ItemStack(Material.AIR))

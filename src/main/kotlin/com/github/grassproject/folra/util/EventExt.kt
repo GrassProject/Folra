@@ -1,4 +1,4 @@
-package com.github.grassproject.folra.api.event
+package com.github.grassproject.folra.util
 
 import com.github.grassproject.folra.api.FolraPlugin
 import org.bukkit.Bukkit

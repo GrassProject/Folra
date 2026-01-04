@@ -48,6 +48,8 @@ java {
 tasks.register<ShadowJar>("shadowJarPlugin") {
     archiveFileName.set("Folra-${project.version}.jar")
 
+    destinationDirectory.set(file("${project.rootDir}/target"))
+
     from(sourceSets.main.get().output)
     configurations = listOf(project.configurations.runtimeClasspath.get())
 

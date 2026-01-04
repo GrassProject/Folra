@@ -1,41 +1,46 @@
 package com.github.grassproject.folra.util.message
 
 import com.github.grassproject.folra.api.FolraPlugin
-import com.github.grassproject.folra.config.impl.JsonConfigFile
+import com.github.grassproject.folra.config.impl.YamlConfigFile
 import com.github.grassproject.folra.util.toMiniMessage
-import com.google.gson.JsonObject
 import net.kyori.adventure.text.Component
 import java.io.File
 
 open class FolraTranslate(private val plugin: FolraPlugin) {
 
-    private lateinit var jsonData: JsonObject
-    private lateinit var langConfig: JsonConfigFile
+    private lateinit var langConfig: YamlConfigFile
     var prefix: String = ""
+        private set
 
     fun init() = loadLanguage()
     fun reload() = loadLanguage()
 
     private fun loadLanguage() {
-        plugin.reloadConfig()
-        val lang = plugin.config.getString("language") ?: "ko-kr"
-        val langFolder = File(plugin.dataFolder, "language").apply { mkdirs() }
-        val jsonFile = File(langFolder, "$lang.json")
-        if (!jsonFile.exists()) plugin.saveResource("language/$lang.json", false)
+        val lang = plugin.config.getString("language", "ko-kr")!!
+        val fileName = "language/$lang.yml"
 
-        langConfig = JsonConfigFile(plugin, "language/$lang.json").apply { load() }
-        jsonData = langConfig.getConfig()
-        prefix = jsonData.get("prefix")?.asString ?: ""
+        val langFile = File(plugin.dataFolder, fileName)
+        if (!langFile.exists()) {
+            plugin.saveResource(fileName, false)
+        }
+
+        langConfig = YamlConfigFile(plugin, fileName).apply { load() }
+
+        prefix = langConfig.getConfig().getString("prefix", "")!!
         Companion.prefix = prefix
     }
 
-    fun literate(key: String, placeholders: Map<String, String>? = null): String =
-        (jsonData.get(key)?.asString ?: key).applyPlaceholders(prefix, placeholders)
+    fun literate(key: String, placeholders: Map<String, String>? = null): String {
+        val raw = langConfig.getConfig().getString(key) ?: key
+        return raw.applyPlaceholders(prefix, placeholders)
+    }
 
-    fun fromList(key: String, placeholders: Map<String, String>? = null): List<String> =
-        jsonData.get(key)?.asJsonArray
-            ?.map { it.asString.applyPlaceholders(prefix, placeholders) }
-            ?: emptyList()
+    fun fromList(key: String, placeholders: Map<String, String>? = null): List<String> {
+        val rawList = langConfig.getConfig().getStringList(key)
+        if (rawList.isEmpty()) return listOf(key)
+
+        return rawList.map { it.applyPlaceholders(prefix, placeholders) }
+    }
 
     fun component(key: String, placeholders: Map<String, String>? = null): Component =
         literate(key, placeholders).toMiniMessage()
@@ -45,21 +50,25 @@ open class FolraTranslate(private val plugin: FolraPlugin) {
 
     companion object {
         var prefix: String = ""
-
         fun String.applyPlaceholders(
-            prefix: String? = null,
+            customPrefix: String? = null,
             placeholders: Map<String, String>? = null
         ): String {
-            val usePrefix = prefix ?: Companion.prefix
-            var result = replace("<prefix>", usePrefix)
-            placeholders?.forEach { (p, v) -> result = result.replace("{$p}", v) }
+            if (!this.contains("<prefix>") && (placeholders == null || placeholders.isEmpty())) {
+                return this
+            }
+
+            var result = this.replace("<prefix>", customPrefix ?: prefix)
+
+            placeholders?.forEach { (k, v) ->
+                result = result.replace("{$k}", v)
+            }
             return result
         }
 
         fun String.toComponentWithPlaceholders(
-            prefix: String? = null,
+            customPrefix: String? = null,
             placeholders: Map<String, String>? = null
-        ): Component = applyPlaceholders(prefix, placeholders).toMiniMessage()
+        ): Component = applyPlaceholders(customPrefix, placeholders).toMiniMessage()
     }
-
 }
