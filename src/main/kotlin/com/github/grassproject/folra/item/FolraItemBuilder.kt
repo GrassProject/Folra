@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
-class FrixelItemBuilder(
+class FolraItemBuilder(
     private val baseItem: ItemStack
 ) {
 
@@ -136,17 +136,17 @@ class FrixelItemBuilder(
     }
 }
 
-inline fun frixelItemBuilder(
+inline fun folraItemBuilder(
     material: Material,
-    block: FrixelItemBuilder.() -> Unit
-) = FrixelItemBuilder(material).apply(block)
+    block: FolraItemBuilder.() -> Unit
+) = FolraItemBuilder(material).apply(block)
 
-inline fun frixelItemBuilder(
+inline fun folraItemBuilder(
     namespace: String,
-    block: FrixelItemBuilder.() -> Unit
-) = FrixelItemBuilder(namespace).apply(block)
+    block: FolraItemBuilder.() -> Unit
+) = FolraItemBuilder(namespace).apply(block)
 
-inline fun frixelItemBuilder(
+inline fun folraItemBuilder(
     base: ItemStack,
-    block: FrixelItemBuilder.() -> Unit
-) = FrixelItemBuilder(base).apply(block)
+    block: FolraItemBuilder.() -> Unit
+) = FolraItemBuilder(base).apply(block)
