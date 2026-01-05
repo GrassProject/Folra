@@ -27,6 +27,7 @@ dependencies {
     compileOnly("net.momirealms:craft-engine-bukkit:0.0.64")
     compileOnly("dev.lone:api-itemsadder:4.0.10")
     compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("gg.aquatic:AEAPI:1.0")
 
     // implementation(project("NMS:1_21_8"))
     implementation("com.zaxxer:HikariCP:7.0.2")

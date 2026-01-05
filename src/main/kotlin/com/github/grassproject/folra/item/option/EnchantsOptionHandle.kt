@@ -1,0 +1,71 @@
+package com.github.grassproject.folra.item.option
+
+import io.papermc.paper.datacomponent.DataComponentTypes
+import io.papermc.paper.datacomponent.item.ItemEnchantments
+import io.papermc.paper.registry.RegistryAccess
+import io.papermc.paper.registry.RegistryKey
+import net.advancedplugins.ae.api.AEAPI
+import net.kyori.adventure.key.Key
+import org.bukkit.Material
+import org.bukkit.NamespacedKey
+import org.bukkit.configuration.ConfigurationSection
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemStack
+import java.util.*
+
+class EnchantsOptionHandle(
+    val enchants: Map<String, Int>,
+) : ItemOptionHandle {
+
+    override val key = Companion.key
+    override fun apply(itemStack: ItemStack) {
+        val enchantments = HashMap<Enchantment, Int>()
+        for ((ench, level) in enchants) {
+            if (ench.uppercase() == "AE-SLOTS") {
+                AEAPI.setTotalSlots(
+                    itemStack,
+                    level
+                )
+                continue
+            }
+            if (ench.uppercase().startsWith("AE-")) {
+                AEAPI.applyEnchant(ench.substringBefore("AE-"), level, itemStack)
+                continue
+            }
+
+            getEnchantmentByString(ench)?.apply {
+                enchantments += this to level
+            }
+        }
+        itemStack.setData(
+            if (itemStack.type == Material.ENCHANTED_BOOK) DataComponentTypes.STORED_ENCHANTMENTS else DataComponentTypes.ENCHANTMENTS,
+            ItemEnchantments.itemEnchantments().addAll(enchantments).build()
+        )
+    }
+
+    private fun getEnchantmentByString(ench: String): Enchantment? {
+        return RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT)
+            .get(NamespacedKey.minecraft(ench.lowercase(Locale.getDefault())))
+    }
+
+    companion object : ItemOption {
+
+        override val key = Key.key("itemoption:enchants")
+        override fun load(section: ConfigurationSection): ItemOptionHandle? {
+            if (!section.contains("enchants")) return null
+
+            val enchantments: MutableMap<String, Int> = HashMap()
+            for (str in section.getStringList("enchants")) {
+                val strs = str.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                if (strs.size < 2) {
+                    continue
+                }
+                val enchantment = strs[0]
+                val level = strs[1].toInt()
+                enchantments[enchantment] = level
+            }
+            if (enchantments.isEmpty()) return null
+            return EnchantsOptionHandle(enchantments)
+        }
+    }
+}

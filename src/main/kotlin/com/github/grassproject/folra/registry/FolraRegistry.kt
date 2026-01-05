@@ -1,18 +1,17 @@
 package com.github.grassproject.folra.registry
 
-import com.github.grassproject.folra.provider.Base64Provider
-import com.github.grassproject.folra.provider.CraftEngineProvider
-import com.github.grassproject.folra.provider.ItemsAdderProvider
-import com.github.grassproject.folra.provider.NexoProvider
-
+import com.github.grassproject.folra.item.FolraItem
+import com.github.grassproject.folra.item.factory.*
 
 object FolraRegistry {
 
-    val ITEM_PROVIDERS = hashMapOf(
-        "ITEMSADDER" to ItemsAdderProvider,
-        "CRAFTENGINE" to CraftEngineProvider,
-        "BASE64" to Base64Provider,
-        "NEXO" to NexoProvider
+    val ITEM_FACTORIES = hashMapOf(
+        "ITEMSADDER" to IAFactory,
+        "CRAFTENGINE" to CraftEngineFactory,
+        "BASE64" to Base64Factory,
+        "NEXO" to NexoFactory
     )
+
+    val ITEM = HashMap<String, FolraItem>()
 
 }
